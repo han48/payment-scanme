@@ -22,6 +22,8 @@ Tác động xấu đến môi trường (do sử dụng mực in, giấy in).
 
 Giải pháp:
 
+![Preivew](img/sample.gif)
+
 Tại mỗi quầy sẽ lắp thêm 1 màn hình phụ, hướng về phía khách hàng.
 Trong trường hợp bình thường thì màn hình này sẽ được tận dụng để hiển thị thông tin quảng cáo, thông tin khuyến mãi, giúp gia tăng sự hấp dẫn của các sản phẩm đến khách hàng.
 Khi khách hàng thực hiện thanh toán, nhân viên sẽ thực hiện thao tác trên màn hình quản lý để gửi thông tin giao dịch đến màn hình phụ (để khách hàng kiểm tra đơn hàng cũng như quét mã QRCode).
@@ -31,7 +33,6 @@ Hình ảnh ví dụ màn hình phụ tài quầy thanh toán:
 
 Màn hình của nhân viên:
 ![Màn hình của nhân viên](img/staff.png)
-
 
 Màn hình của khách hàng:
 ![Màn hình của nhân viên](img/customer.png)
