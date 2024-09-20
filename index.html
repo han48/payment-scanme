@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giao Dịch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #77aaff 3px solid;
+      }
+      header a {
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 16px;
+      }
+      header ul {
+        padding: 0;
+        list-style: none;
+      }
+      header li {
+        float: left;
+        display: inline;
+        padding: 0 20px 0 20px;
+      }
+      .main {
+        padding: 20px;
+        background: #fff;
+        margin-top: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .total {
+        text-align: right;
+        padding: 10px;
+        font-size: 20px;
+        background: #f2f2f2;
+      }
+      .center {
+        text-align: center;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+        margin-top: 20px;
+      }
+      .btn:hover {
+        background-color: #3e8e41;
+      }
+      .btn:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+    </style>
+    <script src="js/broadcast.js"></script>
+    <script>
+      joinToBroadcast();
+      const items = [
+        {
+          name: "Sản Phẩm A",
+          quantity: 2,
+          price: "100,000 VND",
+          amount: "200,000 VND",
+        },
+        {
+          name: "Sản Phẩm B",
+          quantity: 1,
+          price: "150,000 VND",
+          amount: "150,000 VND",
+        },
+      ];
+      const amount = 350000;
+      const qr = "img/qr.png";
+      var status = "1";
+      const sendQRToOtherPage = () => {
+        status = status === "1" ? "0" : "1";
+        sendMessageToOtherTab({
+          amount: amount,
+          qr: qr,
+          items: items,
+          status: status,
+        });
+      };
+      const onload = (items) => {
+        document.getElementById("total").innerHTML = numberWithCommas(amount);
+        const tbody = document.getElementById("items");
+        items.forEach((item) => {
+          const tr = document.createElement("tr");
+          const name = document.createElement("td");
+          name.innerHTML = item.name;
+          const quantity = document.createElement("td");
+          quantity.innerHTML = item.quantity;
+          const price = document.createElement("td");
+          price.innerHTML = item.price;
+          const amount = document.createElement("td");
+          amount.innerHTML = item.amount;
+          tr.appendChild(name);
+          tr.appendChild(quantity);
+          tr.appendChild(price);
+          tr.appendChild(amount);
+          tbody.appendChild(tr);
+        });
+      };
+    </script>
+  </head>
+  <body onload="onload(items)">
+    <header>
+      <div class="container">
+        <h1>Giao Dịch</h1>
+      </div>
+    </header>
+    <div class="container main">
+      <h2>Danh Sách Sản Phẩm</h2>
+      <table>
+        <tr>
+          <th>Tên Sản Phẩm</th>
+          <th>Số Lượng</th>
+          <th>Đơn Giá</th>
+          <th>Thành Tiền</th>
+        </tr>
+        <tbody id="items"></tbody>
+        <!-- Thêm các sản phẩm khác tại đây -->
+      </table>
+      <div class="total">
+        <strong>Tổng Cộng: <span id="total"></span> VND</strong>
+      </div>
+      <div class="center">
+        <button class="btn" onclick="sendQRToOtherPage()">Thanh Toán</button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh Toán</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      header {
+        background: #333;
+        color: #fff;
+        padding-top: 30px;
+        min-height: 70px;
+        border-bottom: #77aaff 3px solid;
+      }
+      header a {
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 16px;
+      }
+      header ul {
+        padding: 0;
+        list-style: none;
+      }
+      header li {
+        float: left;
+        display: inline;
+        padding: 0 20px 0 20px;
+      }
+      .main {
+        padding: 20px;
+        background: #fff;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .product-info,
+      .qr-info {
+        width: 48%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .total {
+        text-align: right;
+        padding: 10px;
+        font-size: 20px;
+        background: #f2f2f2;
+      }
+      .qr-code {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .qr-code img {
+        width: 200px;
+        height: 200px;
+      }
+      .bank-info {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+      }
+      .d-none {
+        display: none;
+      }
+    </style>
+    <script src="js/broadcast.js"></script>
+    <script>
+      joinToBroadcast();
+      const receiveMessageFromOtherTab = (data) => {
+        console.log(data.from, data.data);
+        onload(data.data);
+      };
+      const onload = (data) => {
+        const items = data.items;
+        const status = data.status;
+        const qr = data.qr;
+        const amount = data.amount;
+
+        const welcome = document.getElementById("welcome");
+        const preview = document.getElementById("preview");
+        if (status == "1") {
+          welcome.classList.remove("d-none");
+          preview.classList.add("d-none");
+        } else {
+          preview.classList.remove("d-none");
+          welcome.classList.add("d-none");
+          document.getElementById("total").innerHTML = numberWithCommas(amount);
+          document.getElementById("qr").src = qr;
+          const tbody = document.getElementById("items");
+          tbody.innerHTML = ''
+          items.forEach((item) => {
+            const tr = document.createElement("tr");
+            const name = document.createElement("td");
+            name.innerHTML = item.name;
+            const quantity = document.createElement("td");
+            quantity.innerHTML = item.quantity;
+            const price = document.createElement("td");
+            price.innerHTML = item.price;
+            const amount = document.createElement("td");
+            amount.innerHTML = item.amount;
+            tr.appendChild(name);
+            tr.appendChild(quantity);
+            tr.appendChild(price);
+            tr.appendChild(amount);
+            tbody.appendChild(tr);
+          });
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <iframe
+      id="welcome"
+      src="welcome.html"
+      style="width: 99vw; height: 99vh"
+      frameborder="0"
+    ></iframe>
+    <div class="d-none" id="preview">
+      <header>
+        <div class="container">
+          <h1>Thanh Toán</h1>
+        </div>
+      </header>
+      <div class="container main">
+        <div class="product-info">
+          <h2>Danh Sách Sản Phẩm</h2>
+          <table>
+            <tr>
+              <th>Tên Sản Phẩm</th>
+              <th>Số Lượng</th>
+              <th>Đơn Giá</th>
+              <th>Thành Tiền</th>
+            </tr>
+            <tbody id="items"></tbody>
+            <!-- Thêm các sản phẩm khác tại đây -->
+          </table>
+          <div class="total">
+            <strong>Tổng Cộng: <span id="total"></span> VND</strong>
+          </div>
+        </div>
+        <div class="qr-info">
+          <div class="qr-code">
+            <h2>Quét Mã QR Để Thanh Toán</h2>
+            <img id="qr" alt="QR Code" />
+          </div>
+          <div class="bank-info">
+            <p>Thông Tin Tài Khoản Ngân Hàng:</p>
+            <p>Ngân Hàng: TP Bank</p>
+            <p>Số Tài Khoản: 00070786001</p>
+            <p>Chủ Tài Khoản: ĐẶNG VIỆT DŨNG</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
